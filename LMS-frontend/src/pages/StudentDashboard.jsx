@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import MyCourses from "../components/student/MyCourses";
@@ -11,17 +11,10 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Get student data from localStorage
-  const studentData = useMemo(() => {
-    try {
-      return JSON.parse(localStorage.getItem("student"));
-    } catch {
-      return null;
-    }
-  }, []);
-
+ 
+  const studentData = JSON.parse(localStorage.getItem("student"));
   const studentId = studentData?.id;
-  const studentName = studentData?.name || "Student";
+  const studentName = studentData?.name;
 
   useEffect(() => {
     if (!studentId) {
@@ -32,15 +25,13 @@ const StudentDashboard = () => {
 
     const fetchStudentData = async () => {
       try {
-        const [studentRes, performanceRes] = await Promise.all([
-          axios.get(`api/students/${studentId}`),
-          axios.get(`api/students/performance/${studentId}`)
-        ]);
+        const studentRes = await axios.get(`/api/students/${studentId}`);
+        const performanceRes = await axios.get(`/api/students/performance/${studentId}`);
 
         setStudent(studentRes.data);
         setPerformance(performanceRes.data);
       } catch (err) {
-        setError("Failed to fetch student data.");
+        setError("Failed to load data.");
       } finally {
         setLoading(false);
       }
@@ -54,6 +45,7 @@ const StudentDashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
       {/* Main Content */}
       <div className="flex-1 p-6">
         <h1 className="text-3xl font-bold text-gray-800">Welcome, {studentName}!</h1>
