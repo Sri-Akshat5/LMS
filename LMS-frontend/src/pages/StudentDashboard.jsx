@@ -11,7 +11,7 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
+  // Get student data from localStorage
   const studentData = useMemo(() => {
     try {
       return JSON.parse(localStorage.getItem("student"));
@@ -34,13 +34,13 @@ const StudentDashboard = () => {
       try {
         const [studentRes, performanceRes] = await Promise.all([
           axios.get(`api/students/${studentId}`),
-          axios.get(`api/students/performance/${studentId}`),
+          axios.get(`api/students/performance/${studentId}`)
         ]);
 
         setStudent(studentRes.data);
         setPerformance(performanceRes.data);
       } catch (err) {
-        setError("Failed to load data. Please try again.");
+        setError("Failed to fetch student data.");
       } finally {
         setLoading(false);
       }
@@ -61,9 +61,9 @@ const StudentDashboard = () => {
 
         {/* Student Dashboard Panels */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          <MyCourses courses={student?.enrolledCourses || []} isLoading={loading} />
-          <MyQuizzes quizzes={performance?.quizScores || []} isLoading={loading} />
-          <MyAssignments assignments={performance?.assignmentsSubmitted || []} isLoading={loading} />
+          <MyCourses courses={student?.enrolledCourses || []} />
+          <MyQuizzes quizzes={performance?.quizScores || []} />
+          <MyAssignments assignments={performance?.assignmentsSubmitted || []} />
         </div>
       </div>
     </div>
