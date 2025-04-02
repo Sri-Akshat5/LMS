@@ -11,7 +11,7 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Get Student ID from Local Storage
+ 
   const studentData = JSON.parse(localStorage.getItem("student"));
   const studentId = studentData?.id;
   const studentName = studentData?.name;

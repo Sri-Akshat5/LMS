@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/students/";
+const API_URL = "https://lms-zb0x.onrender.com/api/students/";
 
 // Define functions first
 const studentLogin = async function (email, password) {

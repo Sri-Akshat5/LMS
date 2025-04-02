@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/courses";
+const API_URL = "https://lms-zb0x.onrender.com/api/courses";
 
 // Fetch all courses
 export const getCourses = async () => {

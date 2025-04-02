@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/quizzes/quizzes";
+const API_URL = "https://lms-zb0x.onrender.com/quizzes/quizzes";
 
 // Fetch all quizzes
 

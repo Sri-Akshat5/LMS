@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth/";
+const API_URL = "https://lms-zb0x.onrender.com/api/auth/";
 
 const adminLogin = async function (email, password) {
     try {
