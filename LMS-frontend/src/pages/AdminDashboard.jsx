@@ -14,14 +14,16 @@ const AdminDashboard = () => {
     }, []);
 
     return (
-        <div className="flex">
-           
-            <div className="flex-1 p-5">
-                <h1 className="text-2xl font-bold">Welcome, Admin!</h1>
-                <p className="mt-2">Manage students, courses, and content.</p>
+        <div className="flex flex-col md:flex-row min-h-screen">
+            {/* Sidebar (Only visible on larger screens) */}
+            
+
+            <div className="flex-1 p-5 w-full">
+                <h1 className="text-2xl font-bold text-center md:text-left">Welcome, Admin!</h1>
+                <p className="mt-2 text-center md:text-left">Manage students, courses, and content.</p>
 
                 {/* Admin Panels */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
                     <ManageCourses />
                     <ManageStudents />
                     <RevenueTracking />

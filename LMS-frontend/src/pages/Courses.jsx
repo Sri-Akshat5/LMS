@@ -17,13 +17,24 @@ const Courses = () => {
     };
 
     return (
-        <div className="p-5">
-            <h1 className="text-2xl font-bold mb-4">Available Courses</h1>
-            <div className="grid grid-cols-3 gap-4">
-                {courses.map((course) => (
-                    <CourseCard key={course._id} course={course} user={user} refreshCourses={fetchCourses} />
-                ))}
-            </div>
+        <div className="p-4 md:p-6">
+            <h1 className="text-2xl font-bold mb-4 text-center md:text-left">Available Courses</h1>
+
+            {/* Empty State Message */}
+            {courses.length === 0 ? (
+                <p className="text-gray-600 text-center">No courses available at the moment.</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {courses.map((course) => (
+                        <CourseCard 
+                            key={course._id} 
+                            course={course} 
+                            user={user} 
+                            refreshCourses={fetchCourses} 
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://lms-zb0x.onrender.com/revenue/revenue"; // Ensure this matches your backend route
+const API_URL = "https://lms-zb0x.onrender.com/api/revenue/revenue"; // Ensure this matches your backend route
 
 export const getRevenue = async () => {
     try {

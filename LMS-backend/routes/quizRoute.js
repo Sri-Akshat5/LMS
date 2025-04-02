@@ -33,7 +33,7 @@ router.get("/course/:courseId", async (req, res) => {
 
 router.get("/quizzes", async (req, res) => {
   try {
-      const quizzes = await Quiz.find(); // Fetch all quizzes from DB
+      const quizzes = await Quiz.find(); 
       res.json(quizzes);
   } catch (error) {
       console.error("Error fetching quizzes:", error);

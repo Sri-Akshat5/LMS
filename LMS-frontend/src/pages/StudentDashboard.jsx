@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import Sidebar from "../components/Sidebar";
+
 import MyCourses from "../components/student/MyCourses";
 import MyQuizzes from "../components/student/MyQuizzes";
 import MyAssignments from "../components/student/MyAssignments";
@@ -11,10 +11,17 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
-  const studentData = JSON.parse(localStorage.getItem("student"));
+  // Get student data from localStorage safely
+  const studentData = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem("student")) || null;
+    } catch {
+      return null;
+    }
+  }, []);
+
   const studentId = studentData?.id;
-  const studentName = studentData?.name;
+  const studentName = studentData?.name || "Student";
 
   useEffect(() => {
     if (!studentId) {
@@ -25,13 +32,15 @@ const StudentDashboard = () => {
 
     const fetchStudentData = async () => {
       try {
-        const studentRes = await axios.get(`/api/students/${studentId}`);
-        const performanceRes = await axios.get(`/api/students/performance/${studentId}`);
+        const [studentRes, performanceRes] = await Promise.all([
+          axios.get(`/api/students/${studentId}`),
+          axios.get(`/api/students/performance/${studentId}`),
+        ]);
 
         setStudent(studentRes.data);
         setPerformance(performanceRes.data);
       } catch (err) {
-        setError("Failed to load data.");
+        setError("Failed to load data. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -45,7 +54,6 @@ const StudentDashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
       {/* Main Content */}
       <div className="flex-1 p-6">
         <h1 className="text-3xl font-bold text-gray-800">Welcome, {studentName}!</h1>
@@ -53,9 +61,9 @@ const StudentDashboard = () => {
 
         {/* Student Dashboard Panels */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          <MyCourses courses={student?.enrolledCourses || []} />
-          <MyQuizzes quizzes={performance?.quizScores || []} />
-          <MyAssignments assignments={performance?.assignmentsSubmitted || []} />
+          <MyCourses courses={student?.enrolledCourses || []} isLoading={loading} />
+          <MyQuizzes quizzes={performance?.quizScores || []} isLoading={loading} />
+          <MyAssignments assignments={performance?.assignmentsSubmitted || []} isLoading={loading} />
         </div>
       </div>
     </div>
