@@ -11,10 +11,10 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Get student data from localStorage safely
+ 
   const studentData = useMemo(() => {
     try {
-      return JSON.parse(localStorage.getItem("student")) || null;
+      return JSON.parse(localStorage.getItem("student"));
     } catch {
       return null;
     }
@@ -33,8 +33,8 @@ const StudentDashboard = () => {
     const fetchStudentData = async () => {
       try {
         const [studentRes, performanceRes] = await Promise.all([
-          axios.get(`/api/students/${studentId}`),
-          axios.get(`/api/students/performance/${studentId}`),
+          axios.get(`api/students/${studentId}`),
+          axios.get(`api/students/performance/${studentId}`),
         ]);
 
         setStudent(studentRes.data);
